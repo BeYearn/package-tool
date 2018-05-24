@@ -44,8 +44,8 @@ public class Maintool2 {
 			JSONArray jsonArr = json.getJSONArray("channels");
 			
 			for(int i=0;i<jsonArr.size();i++){
-				String channel = jsonArr.getString(i).split("-")[1];
-				String channelTag = jsonArr.getString(i).split("-")[0];
+				String channel = jsonArr.getString(i).split("-")[0];
+				String channelTag = jsonArr.getString(i).split("-")[1];
 				
 				File channelFile = new File(rootPath+"\\"+ApkName+"\\assets\\channel.ini");
 				File channelTagFile = new File(rootPath+"\\"+ApkName+"\\assets\\config.plist");
@@ -68,7 +68,7 @@ public class Maintool2 {
 	            //回编一个
 	            String dosLine = "java -jar "+rootPath+"\\apktool.jar b " + 
 	            					rootPath+"\\"+ApkName;
-				CommonTool.Log(dosLine+" :"+channelTag);
+				CommonTool.Log(dosLine+" :"+channel+"-"+channelTag);
 				Process process = Runtime.getRuntime().exec(dosLine);
 				CommonTool.outputDosMes(process);
 	            
@@ -78,7 +78,7 @@ public class Maintool2 {
 					outApkDir.mkdirs();
 				}
 				String sourceFileStr = rootPath+"\\"+ApkName+"\\dist\\"+ApkName+".apk";
-				String destFileStr = rootPath+"\\out\\"+ApkName+"-"+channelTag+".apk";
+				String destFileStr = rootPath+"\\out\\"+ApkName+"_"+channel+"-"+channelTag+".apk";
 				fileCopy(sourceFileStr,destFileStr);
 				
 				//签名
