@@ -23,8 +23,15 @@ public class Maintool2 {
     public static void main(String[] args) {
 
         try {
-            System.out.println("please input root path==>");
-            String rootPath = CommonTool.valueInput();
+            //System.out.println("please input root path==>");
+            //String rootPath = CommonTool.valueInput();
+
+            //jar包所在的目录
+            File rootDir = new File("");
+            String rootPath = rootDir.getAbsolutePath();
+            System.out.println("pack root dir path: "+rootPath);
+
+
             Properties popt = new Properties();
             popt.load(new FileInputStream(rootPath + "\\channels.properties"));
 
@@ -33,7 +40,7 @@ public class Maintool2 {
 
 			
 			/*File unzipDir = new File(rootPath+"/"+ApkName);
-			if(!unzipDir.exists()){				
+			if(!unzipDir.exists()){
 				//开始解压apk, 得提前将.apk改为.zip
 				CompressUtil.unzip(rootPath+"/"+ApkName+".zip",rootPath+"/"+ApkName, null);
 			}*/
@@ -102,6 +109,10 @@ public class Maintool2 {
                 CommonTool.Log(dosLineSign);
                 Process processSign = Runtime.getRuntime().exec(dosLineSign);
                 CommonTool.outputDosMes(processSign);
+
+                //删掉原本没签名的
+                File unsignApk = new File(rootPath + "\\out\\" + ApkName + mark + ".apk");
+                boolean delete = unsignApk.delete();
             }
 
         } catch (Exception e) {
